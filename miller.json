@@ -1,0 +1,148 @@
+{
+    "Knowledge": {
+        "verbs": [
+            "Draw",
+            "Identify",
+            "Locate",
+            "Label",
+            "Select",
+            "Outline",
+            "Write",
+            "List",
+            "Recite",
+            "Name",
+            "State",
+            "Record",
+            "Repeat"
+        ],
+        "nouns": [
+            "People",
+            "Events",
+            "Recordings",
+            "Dictionary",
+            "Lab Report",
+            "Definition",
+            "Text reading",
+            "Recognition of Terms"
+        ]
+    },
+    "Comprehension": {
+        "verbs": [
+            "Explain",
+            "Confirm",
+            "Infer",
+            "Relate",
+            "Convert",
+            "Discuss",
+            "Describe",
+            "Match",
+            "Estimate",
+            "Predict",
+            "Paraphrase"
+        ],
+        "nouns": [
+            "Analogy",
+            "Graph",
+            "Speech",
+            "Conversions",
+            "Photograph",
+            "Summary",
+            "Outline",
+            "Story",
+            "Tape recording",
+            "Diagram",
+            "Cartoon"
+        ]
+    },
+    "Application": {
+        "verbs": [
+            "Apply",
+            "Modify",
+            "Build",
+            "Construct",
+            "Solve",
+            "Report",
+            "Sketch",
+            "Produce"
+        ],
+        "nouns": [
+            "Diagram",
+            "Sculpture",
+            "Hypothesis",
+            "Forecast",
+            "Illustration",
+            "Project",
+            "Puzzle",
+            "Map",
+            "Filmstrip"
+        ]
+    },
+    "Analysis": {
+        "verbs": [
+            "Analyze",
+            "Sort",
+            "Categorize",
+            "Investigate",
+            "Compare",
+            "Debate",
+            "Differentiate",
+            "Examine"
+        ],
+        "nouns": [
+            "Survey",
+            "Syllogism",
+            "Model",
+            "Graph",
+            "Conclusion",
+            "Argument broken down",
+            "Questionnaire",
+            "Report"
+        ]
+    },
+    "Synthesis": {
+        "verbs": [
+            "Combine",
+            "Compose",
+            "Design",
+            "Generate",
+            "Invent",
+            "Plan",
+            "Formulate",
+            "Originate",
+            "Devise",
+            "Revise",
+            "Hypothesize"
+        ],
+        "nouns": [
+            "Poem",
+            "Article",
+            "Book",
+            "Report",
+            "Story",
+            "Play",
+            "Cartoon",
+            "Experiment",
+            "Song",
+            "Set of rules, Principles"
+        ]
+    },
+    "Evaluation": {
+        "verbs": [
+            "Solve",
+            "Critique",
+            "Appraise",
+            "Assess",
+            "Judge"
+        ],
+        "nouns": [
+            "Editorial",
+            "Conclusion",
+            "Valuing",
+            "Survey",
+            "Self-evaluation",
+            "Group discussion",
+            "Recommendation",
+            "Court trial"
+        ]
+    }
+}

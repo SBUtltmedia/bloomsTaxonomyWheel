@@ -1,0 +1,134 @@
+.cen {
+position:absolute;
+margin: auto;
+left: 50%; 
+right: 0;
+top: 0px;
+}
+
+.inCen {
+position:absolute;
+	 margin-top: auto;
+	margin-bottom: auto;
+	margin-left: 0px;
+margin-right: 0px; 
+right: 0;
+top: 0px;
+bottom: 80%;
+}
+
+#spin-ball {
+cursor:pointer; 
+transform:rotate(0rad);
+}
+#Abstract .header
+{
+display:none;
+}
+
+#Abstract{
+font-style:italic;
+}
+
+#displayLetter {
+     top:3%;
+	text-align: center;
+     font-size: 1.5rem;
+     letter-spacing: .2rem;
+     text-transform: uppercase;
+     font-family: 'Lato', sans-serif;
+}
+
+.content{
+    margin:0 0 2rem 0;
+         font-size:1rem;   
+}
+.header{
+  color:#FFFFFF;  
+       font-size:1.7rem; 
+    
+}
+
+#displayInfo #Action .header{
+  color:#FFFFFF;  
+       font-size:0rem; 
+    
+} 
+
+
+#displayInfo #Action{
+  color:#FFFFFF;  
+       font-size:2rem; 
+    
+}
+
+#displayInfo, pre{
+ font-family: 'Lato', sans-serif;
+ white-space: pre-wrap;  
+}
+
+ 
+#displayInfo  {
+color:#DDDDDD;
+    font-size:.5rem;
+width:40%;
+height: 100%;
+display:block;
+padding: 2rem;
+	 overflow-y: scroll;
+	 -webkit-box-shadow: 3px 3px 11px 0px rgba(50, 50, 50, 0.59);
+	 -moz-box-shadow:    3px 3px 11px 0px rgba(50, 50, 50, 0.59);
+	 box-shadow:         3px 3px 11px 0px rgba(50, 50, 50, 0.59);
+position: relative;
+background: #4d4d4d; /* Old browsers */
+background: -moz-linear-gradient(top,  #4d4d4d 0%, #6b6b6b 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4d4d4d), color-stop(100%,#6b6b6b)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #4d4d4d 0%,#6b6b6b 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #4d4d4d 0%,#6b6b6b 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #4d4d4d 0%,#6b6b6b 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #4d4d4d 0%,#6b6b6b 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d4d4d', endColorstr='#6b6b6b',GradientType=0 ); /* IE6-9 */
+
+
+}
+
+#cloud {
+position:absolute;
+margin: auto;
+left: 0;
+right: 0;
+top: 350px;
+bottom: 0px;
+}
+
+#cloud2 {
+position:absolute;
+margin: auto;
+left: 0;
+right: 0;
+top: -350px;
+bottom: 0px;
+}
+
+body {
+overflow: hidden;
+	  background-color: #E6E7E8;
+margin:0;
+padding:0;
+background-image: url('../images/lines3.png');
+background-repeat: repeat;
+}
+
+img {
+     top: 50px !important;
+     max-width:50%;
+     min-height: 0px;
+}
+
+
+
+.inCen {
+bottom: 490px;	
+}
+
+

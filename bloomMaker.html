@@ -45,7 +45,6 @@
         var ringPartition1 = fullRing.slice(0, ps[0]);
         var ringPartition2 = fullRing.slice(ps[0], ps[1])
         var ringPartition3 = fullRing.slice(ps[1], fullRing.length)
-        console.log(ringPartition1, ringPartition2, ringPartition3)
         var svgElement, svgDefs;
         var rings = 12;
         var ringLengths;
@@ -129,7 +128,7 @@
                 if (i <= 6) {
                     color = "gold"
                 } else if (i > 5 && i <= 10) {
-                    color = "steelblue";
+                    color = "#396a93";
                 } else if (i > 11) {
                     color = "lightskyblue";
                 }
@@ -188,21 +187,24 @@
             }
         }
 
-        function populateRingPartition(index, words, ringLengths) {
-            var k = rings - 1;
-            while (k--) {
-                // Gets the corresponding textPath we are adding text to.
-                var path = document.getElementById("arc-" + (index + 1) + "-ring-" + (k + 1));
-                var textItem = document.getElementById("textItem-arc-" + (index + 1) + "-ring-" + (k + 1));
-                var textPath = document.getElementById("textPath-arc-" + (index + 1) + "-ring-" + (k + 1));
-                //console.log("textPath-arc-" + index + "-ring-" + k)
-                // Starting from the center going out, first partition is the action.
-                if (k == ps[0]) {
-                    var actionWord = words[index]["Action"];
-                    ringPartition1[ringPartition1.length - 1] = actionWord;
-                    textPath.appendChild(document.createTextNode(actionWord));
-                    textPath.setAttribute("font-size", "18pt")
+        function recursivePopulateRingPartition(index, words, ringLengths) {
+            if (index < 6) {
+                var k = rings - 1;
+                while (k--) {
+                    // Gets the corresponding textPath we are adding text to.
+                    var path = document.getElementById("arc-" + (index + 1) + "-ring-" + (k + 1));
+                    var textItem = document.getElementById("textItem-arc-" + (index + 1) + "-ring-" + (k + 1));
+                    var textPath = document.getElementById("textPath-arc-" + (index + 1) + "-ring-" + (k + 1));
+                    //console.log("textPath-arc-" + index + "-ring-" + k)
+                    // Starting from the center going out, first partition is the action.
+                    if (k == ps[0]) {
+                        var actionWord = words[index]["Action"];
+                        ringPartition1[ringPartition1.length - 1] = actionWord;
+                        textPath.appendChild(document.createTextNode(actionWord));
+                        textPath.setAttribute("font-size", "18pt")
+                    }
                 }
+                recursivePopulateRingPartition(++index, words, ringLengths);
             }
         }
 
@@ -225,11 +227,10 @@
                 var textItem = document.getElementById("textItem-" + arcID);
                 if (indexOfArc != 4) {
                     var useItem = document.createElementNS("http://www.w3.org/2000/svg", "use");
-                    //useItem.setAttributeNS("http://www.w3.org/2000/svg", "stroke", "red");
                     useItem.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "#" + arcID);
 
                     svgElement.appendChild(useItem)
-                } 
+                }
 
                 switch (indexOfArc) {
                     case 8:
@@ -253,7 +254,7 @@
                             break;
                         }
                     default:
-                        console.log("Didn't do anything");
+                        
                 }
             } catch (e) {
 
@@ -362,55 +363,47 @@
 
             return emptyArray;
         }
-
+        
+        
         $(function() {
             var textData;
-
             $.when(getBloomData()).then(
+
                 function(bloomData) {
-
                     for (i in bloomData) {
-
                         ringOutcomeVerbs[i] = bloomData[i]["Outcome Verbs"].split(", ").sort(function(a, b) {
-
-                            // ASC  -> a.length - b.length
-                            // DESC -> b.length - a.length
                             return b.length - a.length;
                         });
                     }
 
                     for (i in bloomData) {
-
                         ringInstructionalStrategies[i] = bloomData[i]["Instructional Strategies for wheel"].split(", ").sort(function(a, b) {
-
-                            // ASC  -> a.length - b.length
-                            // DESC -> b.length - a.length
                             return b.length - a.length;
                         });
                     }
+
                     makeCircles();
-                    console.log("a")
                     makePie();
-                    console.log("b")
-
-                    console.log("c")
                     ringLengths = getRingLengths();
-
-                    // populates entire pie with 6 loop iterations
-                    for (var i = 0; i < slices; i++) {
-                        populateRingPartition(i, bloomData, ringLengths)
-                    }
+                    recursivePopulateRingPartition(0, bloomData, ringLengths);
                     recursivePopulateArc(0, ps[1], 0, ringLengths, " ");
                     recursivePopulateArc2(0, fullRing.length - 1, 0, ringLengths, " ");
+                    console.log(getSVG())
                 });
-
+            
         });
+
+
+        function getSVG() {
+            return svgElement;
+        }
+        
+        
+        
     </script>
 </head>
 
 <body>
-
-
 
 </body>
 

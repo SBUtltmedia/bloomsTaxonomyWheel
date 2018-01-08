@@ -3,12 +3,14 @@
 <head>
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script charset="utf-8" type="text/javascript" src="jquery.csv.js"></script>
+    <script charset="utf-8" type="text/javascript" src="data.js"></script>
     <style>
         svg {}
 
         text {
-            font-family: "Effra-Inline";
+            font-family: 'Effra-Inline';
             font-size-adjust: auto;
 
 
@@ -22,7 +24,7 @@
             }
         }
 
-        path[id^="ray"] {
+        path[id^='ray'] {
             stroke: black;
         }
 
@@ -36,8 +38,7 @@
             fill: none;
         }
     </style>
-    <script charset="utf-8" type="text/javascript" src="jquery.csv.js"></script>
-    <script charset="utf-8" type="text/javascript" src="data.js"></script>
+
 
     <script>
         var ps = [4, 8]
@@ -51,6 +52,10 @@
         var slices = 6;
         var ringOutcomeVerbs = [];
         var ringInstructionalStrategies = [];
+        var totalSize = 1100;
+        var arc = 360 / slices;
+        var ringHeight = totalSize / 2.2 / rings;
+        var center = totalSize / 2;
 
         function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
             var angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
@@ -97,18 +102,27 @@
             ].join(" ");
         }
 
-        function makeCircles() {
-            var totalSize = 1100;
-            var arc = 360 / slices;
-            var ringHeight = totalSize / 2.2 / rings;
-            var center = totalSize / 2;
 
+        function makeSVG() {
             svgDefs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
             svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svgElement.setAttribute("width", totalSize + "px");
+            styleElement = document.createElementNS("http://www.w3.org/2000/svg", "style");
+            styleElement.innerHTML = $("style").html();
+            svgElement.setAttribute('width', totalSize + "px");
             svgElement.setAttribute("height", totalSize + "px")
-            document.getElementsByTagName("body")[0].appendChild(svgElement);
+
             svgElement.appendChild(svgDefs);
+            svgElement.appendChild(styleElement);
+            document.getElementsByTagName("body")[0].appendChild(svgElement);
+
+
+
+        }
+
+        function makeCircles() {
+
+
+
 
             for (i = 13; i > 5; i--) {
                 var circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
@@ -254,7 +268,7 @@
                             break;
                         }
                     default:
-                        
+
                 }
             } catch (e) {
 
@@ -363,8 +377,42 @@
 
             return emptyArray;
         }
-        
-        
+
+        function download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + text);
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+
+        function generateLink(fileName, data) {
+            var link = document.createElement('a'); // Create a element.
+            link.download = fileName; // Set value as the file name of download file.
+            link.href = data; // Set value as the file content of download file.
+            return link;
+        }
+
+        function exportSVG(element, fileName) {
+            var svg = element;
+            var svgString;
+            if (window.ActiveXObject) {
+                svgString = svg.xml;
+            } else {
+                var oSerializer = new XMLSerializer();
+                svgString = oSerializer.serializeToString(svg);
+            }
+            generateLink(fileName + '.svg', 'data:image/svg+xml;utf8,' + svgString).click();
+        }
+
+
+
+
         $(function() {
             var textData;
             $.when(getBloomData()).then(
@@ -381,30 +429,55 @@
                             return b.length - a.length;
                         });
                     }
-
+                    makeSVG();
                     makeCircles();
                     makePie();
                     ringLengths = getRingLengths();
                     recursivePopulateRingPartition(0, bloomData, ringLengths);
                     recursivePopulateArc(0, ps[1], 0, ringLengths, " ");
                     recursivePopulateArc2(0, fullRing.length - 1, 0, ringLengths, " ");
-                    console.log(getSVG())
+
+                    //$("#wheel").css('background',"url('data:image/svg+xml;base64,"+btoa(getSVG().outerHTML)+"')")
+                    //$("#wheel").css('background-image', "media/bloomsTaxonomyWheel.svg")
+                    console.log(getSVG().outerHTML)
+                    document.body.style.backgroundImage = "url(data:image/svg+xml;base64,"+ btoa(getSVG().outerHTML) + ");"
+                    //download("bloomsTaxonomyWheel.svg", getSVG())
+                    //exportSVG(getSVG(),"bloomsTaxonomyWheel.svg")
+                    /* 
+                     var serializer = new XMLSerializer();
+                     var source = serializer.serializeToString(getSVG());
+
+                     //add name spaces.
+                     if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+                         source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+                     }
+                     if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+                         source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+                     }
+
+                     //add xml declaration
+                     source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+                     //convert svg source to URI data scheme.
+                     var url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+
+                     //set url value to a element's href attribute.
+                     document.getElementById("link").href = url;
+                     
+                     //you can download svg file by right click menu.*/
                 });
-            
+
         });
 
 
         function getSVG() {
             return svgElement;
         }
-        
-        
-        
     </script>
 </head>
 
 <body>
-
+    <img id="wheel" style="width:1100px;height:1100px;">
 </body>
 
 </html>
